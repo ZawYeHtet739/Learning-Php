@@ -1,0 +1,34 @@
+# PHP Syntax, Variables & Data Types
+
+##simple
+
+    <?php 
+        $num1 = 3;
+        $num2 = 7;
+    ?>
+    <p>Total :
+        <!-- <?php echo $num1 + $num2 ?> -->
+        <?= $num1 + $num2 ?>
+    </p>
+
+-------------------------------------------------------------
+
+##php and html
+
+### first method
+<?php $hour = date('h') ?>
+
+    <p>
+        <?php
+        if ($hour < 6 || $hour > 18) {
+            echo "<b>Night Time</b>";
+        } else {
+            echo "<i>Day Time</i>";
+        }
+        ?>
+    </p>
+
+
+
+-------------------------------------------------------------
+
