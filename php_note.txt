@@ -11,7 +11,9 @@
     }
     ?>    
 
-## Php within Html
+----------------------------------------------------------------------------------
+
+## Php within Html (Template)
     <p>
         <?php $hour = date("H") ?>
         <?php if ($hour < 6 || $hour > 18) { ?>
@@ -20,3 +22,74 @@
             <i>Day Time.</i>
         <?php } ?>
     </p>
+
+## Alternative Syntax
+    <p>
+        <?php $hour = date("H") ?>
+        <?php if ($hour < 6 || $hour > 18): ?>
+            <b>Night Time.</b>
+        <?php else: ?>
+            <i>Day Time.</i>
+        <?php endif ?>
+    </p>
+
+----------------------------------------------------------------------------------
+
+## Check type
+$var;
+var_dump($var); // Warning: Undefined Variable // NULL
+$var = 123;
+var_dump($var); // int(123)
+$var = "abc";
+var_dump ($var); // String(3) "abc"
+
+----------------------------------------------------------------------------------
+
+## Context Scope
+<?php
+
+$name = "Bob";
+
+function hello() {
+    global  $name;  //must declare global
+    echo $name;
+}
+
+hello();
+
+----------------------------------------------------------------------------------
+
+## Function Scope 
+function hello(){
+    if (true) {
+        $name = "Alice";
+    }
+    echo $name; //can use within anywhere in function
+}
+hello(); // Alice
+
+----------------------------------------------------------------------------------
+
+## Variable exist Check
+<?php
+echo isset($name); // Empty
+$name = "Bob";
+echo isset($name); // 1
+
+----------------------------------------------------------------------------------
+
+##Const
+
+*** Const can use everywhere without using global ***
+
+<?php
+define("MIN", 1);
+define("MAX", 10);
+echo MAX; // 10
+MAX = 20; // Syntax Error: unexpected =
+
+----------------------------------------------------------------------------------
+-----------------------------
+----------------------------------------------------------------------------------
+
+#PHP Strings & Arrays

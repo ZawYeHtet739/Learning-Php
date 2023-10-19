@@ -13,17 +13,20 @@
 
     <?php date_default_timezone_set('Asia/Yangon'); ?>
 
-    <?php $hour = date("H") ?>
 
-    <?php echo $hour ?>
+    <p>
+        <?php $hour = date("H") ?>
+        <?php if ($hour < 6 || $hour > 18): ?>
+            <b>Night Time.</b>
+        <?php else: ?>
+            <i>Day Time.</i>
+        <?php endif ?>
+    </p>
 
-    <?php
-    if ($hour < 6 || $hour > 18) {
-        echo "<b>Night Time.</b>";
-    } else {
-        echo "<i>Day Time.</i>";
-    }
-    ?>
+    <p>
+        <?php $numb = 123; ?>
+        <?= var_dump($numb); ?>    
+    </p>
 
 
 </body>
