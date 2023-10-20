@@ -93,3 +93,256 @@ MAX = 20; // Syntax Error: unexpected =
 ----------------------------------------------------------------------------------
 
 #PHP Strings & Arrays
+
+
+##String 
+
+*** String can be use like Template String ***
+
+<?php
+$name = "Alice";
+$role = "Web Developer";
+echo "$name is a $role";
+
+----------------------------------------------------------------------------------
+
+### Single Quote
+
+*** Variable does not work in Single quote String.  ***
+
+<?php
+$name = 'Bob';
+echo 'Hello $name, welcome.';
+// Hello $name, welcome.
+
+----------------------------------------------------------------------------------
+
+### Escape character
+
+$price = 1.99;
+echo "$price\$";
+echo "This tree is 10' 8\" long.";  // This tree is 10' 8" long.
+echo "C:\\xampp\\htdocs";   // C:\xampp\htdocs
+
+----------------------------------------------------------------------------------
+
+### Get String count
+
+<?php
+echo strlen("Hello World"); // 11
+echo strlen("ကခဂ"); // 9
+
+----------------------------------------------------------------------------------
+
+### substr()
+
+<?php
+$str = "A quick brown fox.";
+echo substr($str, 0, 7); // A quick
+
+----------------------------------------------------------------------------------
+
+### Search & Replace
+
+<?php
+$str = "Come here, quick, quick.";
+echo str_replace("quick", "hurry", $str);   // Come here, hurry, hurry.
+
+----------------------------------------------------------------------------------
+
+
+##Array
+
+*** Arrary cannot print with echo  ***
+
+
+### Numeric Array
+
+<?php
+$users = array("Alice", "Bob");
+$fruits = ["Apple", "Orange"];
+echo $users;
+// Warning: Array to string conversion
+// Array
+print_r($fruits);
+// Array ( [0] => Apple [1] => Orange )
+var_dump($fruits);
+//array(2) { [0]=> string(5) "Apple" [1]=> string(6) "Orange" }
+
+----------------------------------------------------------------------------------
+
+### Associative Array
+
+<?php
+$user = [ "name" => "Alice", "age" => 22];
+print_r($user);     // Array ( [name] => Alice [age] => 22 )
+
+----------------------------------------------------------------------------------
+
+### Inner Array
+
+<<?php
+$users = [
+["name" => "Alice", "age" => 22],
+["name" => "Bob", "age" => 23],
+["name" => "Tom", "age" => 24],
+];
+print_r( $users[0] );       // Array ( [name] => Alice [age] => 22 )
+echo $users[0]['name'];     // Alice
+
+----------------------------------------------------------------------------------
+
+### Add Array Values
+
+<?php
+$fruits = ['Apple', 'Orange'];
+$fruits[4] = 'Mango';      // $fruits[] = 'Mango'; (auto index)
+print_r($fruits);   // Array ( [0] => Apple [1] => Orange [4] => Mango )
+
+----------------------------------------------------------------------------------
+
+### Array Destructuring
+
+<?php
+$user = ["Alice", 22];
+list($name, $age) = $user;
+echo $name; // Alice
+
+// ( PHP >= 7.1 ) 
+
+<?php
+$user = ["Alice", 22];
+[ $name, $age ] = $user;
+echo $name; // Alice
+
+//Associative Array
+
+<?php
+$user = ["name" => "Alice", "age" => 22];
+["name" => $name, "age" => $age] = $user;
+echo $name; // Alice
+
+----------------------------------------------------------------------------------
+
+### Array Spread
+
+<?php
+$nums1 = [1, 2];
+$nums2 = [ ...$nums1, 3 ];
+print_r($nums2);
+// Array ( [0] => 1 [1] => 2 [2] => 3 )
+
+----------------------------------------------------------------------------------
+
+### Get item count
+
+<?php
+$nums = [1, 2, 3, 4];
+echo count($nums); 
+
+----------------------------------------------------------------------------------
+
+### Check array or not
+
+<?php
+$users = ["alice", "bob"];
+echo is_array($users); // 1
+
+----------------------------------------------------------------------------------
+
+### Check Array has values or not 
+
+<?php
+$users = ["alice", "bob"];
+echo in_array('bob', $users); // 1
+
+----------------------------------------------------------------------------------
+
+### Check Array has values or not and get that Array index
+
+<?php
+$users =["tom", "bob", "alice"];
+echo array_search("alice", $users); // 2
+
+----------------------------------------------------------------------------------
+
+### Array values add and delete
+
+<?php
+$users =["alice", "bob"];
+array_push($users, "tom");
+print_r($users); // ["alice", "bob", "tom"]
+array_pop($users);
+print_r($users); // ["alice", "bob"]
+
+$users =["alice", "bob"];
+array_unshift($users, "tom");
+print_r($users); // ["tom", "alice", "bob"]
+array_shift($users);
+print_r($users); // ["alice", "bob"]
+
+----------------------------------------------------------------------------------
+
+### Remove Array values and Get Array values
+
+*** remove original values ***
+
+<?php
+$users =["tom", "bob", "alice"];
+$result = array_splice($users, 1, 1);
+print_r($users); // Array ( [0] => tom [1] => alice )
+print_r($result); // Array ( [0] => bob )
+
+----------------------------------------------------------------------------------
+
+### Remove Array values and Get Array values
+
+<?php
+$users =["tom", "bob", "alice"];
+$result = array_splice($users, 1, 1);
+print_r($users); // Array ( [0] => tom [1] => alice )
+print_r($result); // Array ( [0] => bob )
+
+----------------------------------------------------------------------------------
+
+### Get only array values and array index
+
+?php
+$user =["name" => "alice", "age" => 22];
+$keys = array_keys($user);
+$vals = array_values($user);
+print_r($keys);// Array ( [0] => name [1] => age )
+print_r($vals);// Array ( [0] => alice [1] => 22 )
+
+----------------------------------------------------------------------------------
+
+### Sort Array
+
+<?php
+$users =["tom" => 23, "bob" => 22, "alice" => 24];
+sort($users);
+print_r($users);
+// Array ( [0] => 22 [1] => 23 [2] => 24 )
+$users =["tom" => 23, "bob" => 22, "alice" => 24];
+ksort($users);
+print_r($users);
+// Array ( [alice] => 24 [bob] => 22 [tom] => 23 )
+
+----------------------------------------------------------------------------------
+
+### Getting Array by spliting Character word and Getting String by adding Arry Values
+
+<?php
+$input = "A quick brown fox.";
+$arr = explode(" ", $input);
+print_r($arr);
+// Array ( [0] => A [1] => quick [2] => brown [3] => fox. )
+<?php
+$input = "A quick brown fox.";
+$arr = explode(" ", $input);
+print_r($arr);
+// Array ( [0] => A [1] => quick [2] => brown [3] => fox. )
+
+----------------------------------------------------------------------------------
+
+

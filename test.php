@@ -1,8 +1,10 @@
+
 <?php
+$users =["alice", "bob"];
+array_unshift($users, "tom");
+print_r($users); // ["tom", "alice", "bob"]
 
-
-
-echo isset($name); // Empty
-$name = "Bob";
-echo isset($name); // 1
+echo "<br>";
+array_shift($users);
+print_r($users); // ["alice", "bob"]
 
