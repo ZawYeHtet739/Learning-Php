@@ -25,7 +25,7 @@
 
     <p>
         <?php $numb = 123; ?>
-        <?= var_dump($numb); ?>    
+        <?= var_dump($numb); ?>
     </p>
 
 

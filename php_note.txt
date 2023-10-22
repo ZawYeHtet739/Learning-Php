@@ -215,7 +215,7 @@ $user = ["Alice", 22];
 [ $name, $age ] = $user;
 echo $name; // Alice
 
-//Associative Array
+//Associative Array with Array Destructuring
 
 <?php
 $user = ["name" => "Alice", "age" => 22];
@@ -343,6 +343,123 @@ $arr = explode(" ", $input);
 print_r($arr);
 // Array ( [0] => A [1] => quick [2] => brown [3] => fox. )
 
+
+----------------------------------------------------------------------------------
+-----------------------------
 ----------------------------------------------------------------------------------
 
+#PHP Dot Operator & Control Structures
 
+## Operator
+
+*** <> can usefor Not Equal Operator ***
+*** Can use "and" and "or" for "AND" and "OR" Operator ***
+
+### Dot Operator
+
+<?php
+$data = ["Apple", "Orange"];
+echo $data[0] . " and " . $data[1];     // Apple and Orange
+
+----------------------------------------------------------------------------------
+
+### Comma Operator
+
+echo $data[0], " and ", $data[1];   // Apple and Orange
+
+----------------------------------------------------------------------------------
+
+### Exponent Operator
+
+echo 2 ** 3; // 8
+
+----------------------------------------------------------------------------------
+
+### .= Operator 
+
+<?php
+$result = "Welcome";
+$result .= " ";
+$result .= "Bob";
+echo $result; // Welcome Bob
+
+----------------------------------------------------------------------------------
+
+### ++ and -- Operator
+
+$x = 3;
+$y = $x++; // $y => 3, $x => 4
+
+----------------------------------------------------------------------------------
+
+### Spaceship Operator
+
+<?php
+echo 3 <=> 5; // -1
+echo 5 <=> 5; // 0
+echo 5 <=> 3; // 1
+
+----------------------------------------------------------------------------------
+
+### XOR Operator
+
+*** must be only one condition true ***
+
+<?php
+$x = 3;
+$y = 5;
+echo $x < $y or $x === 3; // 1 (true)
+echo $x < $y xor $x === 3; // (false)
+
+----------------------------------------------------------------------------------
+
+### Ternary & Null Coalescing Operator
+
+<?php
+$name = "";
+echo $name ? $name : "Unknown"; // Unknown
+$name = "Alice";
+echo $name ? $name : "Unknown"; // Alice
+
+//shorten way
+
+<?php
+$name = "";
+echo $name ?: "Unknown"; // Unknown
+$name = "Alice";
+echo $name ?: "Unknown"; // Alice
+
+
+// if Variable not exit it can be this warning
+
+<?php
+echo $name ? $name : "Unknown";
+// Warning: Undefined variable $name
+echo $name ?: "Unknown";
+// Warning: Undefined variable $name
+
+// so it can be write with isset()
+
+echo isset($name) ? $name : "Unknown"; // Unknown
+
+----------------------------------------------------------------------------------
+
+###  Null Coalescing Operator 
+
+<?php
+echo $name ?? "Unknown"; // Unknown
+
+----------------------------------------------------------------------------------
+
+###  Null Coalescing Assignment Operator
+
+*** if name variable exist $name will be assign in $result ***
+
+<?php
+$result = "Alice";
+$result ??= $name;
+echo $result; 
+
+----------------------------------------------------------------------------------
+
+## Control Structures
