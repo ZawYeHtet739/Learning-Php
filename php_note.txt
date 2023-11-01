@@ -23,6 +23,8 @@
         <?php } ?>
     </p>
 
+----------------------------------------------------------------------------------
+
 ## Alternative Syntax
     <p>
         <?php $hour = date("H") ?>
@@ -153,7 +155,7 @@ echo str_replace("quick", "hurry", $str);   // Come here, hurry, hurry.
 
 ##Array
 
-*** Arrary cannot print with echo  ***
+*** Arrary cannot print with echo, can print with var_dump() or print_r() ***
 
 
 ### Numeric Array
@@ -234,7 +236,7 @@ print_r($nums2);
 
 ----------------------------------------------------------------------------------
 
-### Get item count
+### Get Array item count
 
 <?php
 $nums = [1, 2, 3, 4];
@@ -295,16 +297,6 @@ print_r($result); // Array ( [0] => bob )
 
 ----------------------------------------------------------------------------------
 
-### Remove Array values and Get Array values
-
-<?php
-$users =["tom", "bob", "alice"];
-$result = array_splice($users, 1, 1);
-print_r($users); // Array ( [0] => tom [1] => alice )
-print_r($result); // Array ( [0] => bob )
-
-----------------------------------------------------------------------------------
-
 ### Get only array values and array index
 
 ?php
@@ -338,10 +330,8 @@ $arr = explode(" ", $input);
 print_r($arr);
 // Array ( [0] => A [1] => quick [2] => brown [3] => fox. )
 <?php
-$input = "A quick brown fox.";
-$arr = explode(" ", $input);
-print_r($arr);
-// Array ( [0] => A [1] => quick [2] => brown [3] => fox. )
+$str = implode(" ", $arr);
+echo $str; // A quick brown fox.
 
 
 ----------------------------------------------------------------------------------
@@ -453,7 +443,7 @@ echo $name ?? "Unknown"; // Unknown
 
 ###  Null Coalescing Assignment Operator
 
-*** if name variable exist $name will be assign in $result ***
+*** if $result variable exist $name will be assign in $result ***
 
 <?php
 $result = "Alice";
@@ -463,3 +453,1016 @@ echo $result;
 ----------------------------------------------------------------------------------
 
 ## Control Structures
+
+
+### If Statement
+
+<?php
+$time = date("h");
+if($time > 6 and $time < 18) {
+echo "Day Time";
+} else {
+echo "Night Time";
+}
+
+
+//Alternative Syntax
+
+*** mostly use in HTML + PHP ***
+
+<?php
+$time = date("h");
+if($time > 6 and $time < 18):
+echo "Day Time";
+else:
+echo "Night Time";
+endif;
+
+----------------------------------------------------------------------------------
+
+### Elseif Statement
+
+<?php
+$day = date("D");
+if($day === "Sun") {
+echo "Today is Sunday.";
+} elseif ($day === "Sat") { // can also use " } else if ($day === "Sat") { "
+echo "Today is Saturday.";
+} else {
+echo "Today is a weekday.";
+}
+
+----------------------------------------------------------------------------------
+
+### Switch Statement
+
+<?php
+$day = date("D");
+switch($day) {
+case "Sat":
+case "Sun":
+echo "Weekend";
+break;
+case "Fri":
+echo "TGIF";
+break;
+default:
+echo "Weekday";
+}
+
+----------------------------------------------------------------------------------
+
+### Match Expression //php 8
+
+*** like switch statement but can store values into variables ***
+
+*** switch is == and match is === ***
+
+<?php
+$day = date("D");
+$result = match($day) {
+"Sat", "Sun" => "Weekend",
+"Fri" => "TGIF",
+default => "Weekday"
+};
+echo $result;
+
+----------------------------------------------------------------------------------
+
+### While Loop
+
+*** Can use method like array_sum() and array_reduce() ***
+
+
+<?php
+$nums = [12, 42, -2, 8, 621];
+$i = 0;
+$result = 0;
+while($i < count($nums)) {
+if($nums[$i] < 0) {
+$i++;
+continue;
+}
+$result += $nums[$i];
+$i++;
+}
+echo $result; // 683
+
+
+// using break
+
+*** break 1 exits the current loop, and break 2 exits two levels of nested loops ***
+*** break default is 1 ***
+
+<?php
+$nums = [12, 42, -2, 8, 621];
+$i = 0;
+$result = 0;
+while($i < count($nums)) {
+if($nums[$i] < 0) break;
+$result += $nums[$i];
+$i++;
+}
+echo $result; // 54
+
+
+----------------------------------------------------------------------------------
+
+### Do-While Loop
+
+<?php
+$nums = [12, 42, -2, 8, 621];
+$i = 0;
+$result = 0;
+do {
+$result += $nums[$i];
+$i++;
+} while($i < count($nums));
+echo $result; // 681
+
+
+----------------------------------------------------------------------------------
+
+### For Loop
+
+<?php
+$nums = [12, 42, -2, 8, 621];
+$result = 0;
+for($i = 0; $i < count($nums); $i++) {
+$result += $nums[$i];
+}
+echo $result; // 681
+
+----------------------------------------------------------------------------------
+
+### For Each Loop
+
+<?php
+$nums = [12, 42, -2, 8, 621];
+$result = 0;
+foreach($nums as $num) {
+$result += $num;
+}
+echo $result; // 681
+
+----------------------------------------------------------------------------------
+
+### Associative Array with forEach Loop
+
+
+*** can use array_keys() ***
+
+$user = [ "alice" => 98, "bob" => 95];
+
+foreach ($user as $key => $value) {
+    $result[] = $key;
+    $result2[] = $value;
+}
+
+var_dump($result);
+
+echo "<br>";
+
+echo "<br>";
+
+print_r($result);
+
+echo "<br>";
+
+echo "<br>";
+
+var_dump($result2);
+
+----------------------------------------------------------------------------------
+-----------------------------
+----------------------------------------------------------------------------------
+
+
+# PHP Functions
+
+
+## Simple
+
+<?php
+function add($a, $b) {
+echo $a + $b;
+}
+add(1, 2); // 3
+
+*** If the argument does not match, an error ***
+*** If there are too many arguments in HP, there will be no error. ***
+
+add(1, 2, 3); // 3
+
+----------------------------------------------------------------------------------
+
+## Return
+
+*** If does not have return, it will return null ***
+
+<?php
+function add($a, $b) {
+return $a + $b;
+}
+$result = add(1, 2);
+echo add(1, 2); // 3
+
+----------------------------------------------------------------------------------
+
+## Default Values in Parameter
+
+<?php
+function add($a, $b = 0) {
+echo $a + $b;
+}
+add(1, 2); // 3
+add(9); // 9
+
+----------------------------------------------------------------------------------
+
+## Rest Parameter
+
+<?php
+function add($a, ...$b) {
+print_r($b);
+}
+add(1, 2, 3, 4);
+// Array ( [0] => 2 [1] => 3 [2] => 4 )
+
+// old way 
+<?php
+function add() {
+$args = func_get_args();
+print_r($args);
+}
+add(1, 2, 3, 4);
+// Array ( [0] => 1 [1] => 2 [2] => 3 [3] => 4 )
+
+----------------------------------------------------------------------------------
+
+## Type Hint ( Scalar Type Hinting )
+
+<?php
+function add($nums) {
+return array_sum($nums);
+}
+echo add(1, 2);     // Error: array_sum(): Argument must be array
+
+
+//  can write with this way for prevent above error
+<?php
+function add(Array $nums) {
+return array_sum($nums);
+}
+echo add(1, 2);     // Error: add(): Argument must be array
+
+----------------------------------------------------------------------------------
+
+## Return Type Hinting 
+
+<?php
+function add(Array $nums): float {
+echo array_sum($nums);
+}
+add([1, 2]);
+// Error: add(): Return value must be float
+
+----------------------------------------------------------------------------------
+
+## Union Type (php 8)
+
+<?php
+function price(int|float $n) {
+return "Price is \$$n";
+}
+echo price(3.1); // Price is $3.1
+echo price(2); // Price is $2
+
+----------------------------------------------------------------------------------
+
+## Pass by Value and Pass by Reference
+
+
+### Pass by Value
+
+<?php
+$name = "Alice";
+function hello($n) {
+$n = "Bob";
+echo "Hello $n";
+}
+hello($name); // Hello Bob
+echo $name; // Alice
+
+### Pass by Refrence
+
+*** & Refrence Operator ***
+
+<?php
+$name = "Alice";
+function hello(&$n) {
+$n = "Bob";
+echo "Hello $n";
+}
+hello($name); // Hello Bob
+echo $name; // Bob
+
+----------------------------------------------------------------------------------
+
+## Function Global Scope
+
+
+*** Function are global scope ***
+*** Can call function on outside of function because functions are global scope. ***
+*** But can't vall variable which is inside in function. ***
+
+
+<?php
+function one() {
+$name = "One";
+}
+one();
+echo $name;     // Warning: Undefined variable $name
+
+*** should call one() first ***
+
+<?php
+function one() {
+function two() {
+echo "Two";
+}
+}
+one();
+two(); // Two
+
+
+----------------------------------------------------------------------------------
+
+## Global Variable can use with global keyword
+
+
+<?php
+$name = "Alice";
+function hello() {
+echo "Hello $name";
+}
+hello();    // Warning: Undefined variable $name
+
+
+// can fix like this 
+
+*** It can change global values *** 
+
+<?php
+$name = "Alice";
+function hello() {
+global $name;
+$name = "Bob";
+}
+hello();
+echo $name; // Bob
+
+----------------------------------------------------------------------------------
+
+## Assign Function in Variable ( Function Variable )
+
+<?php
+function add($a, $b) {
+echo $a + $b;
+}
+$name = "add";
+$name(1, 2); // 3
+
+----------------------------------------------------------------------------------
+
+## Function Expression ( Nameless Function or Anonymous Function )
+
+// Simple
+
+<?php
+$nums = [1, 2, 3, 4];
+function two($n) {
+return $n * 2;
+}
+$result = array_map("two", $nums);
+print_r($result);   // Array ( [0] => 2 [1] => 4 [2] => 6 [3] => 8 )
+
+// Nameless function
+
+<?php
+$nums = [1, 2, 3, 4];
+$result = array_map(function($n) {
+return $n * 2;
+}, $nums);
+print_r($result);
+// Array ( [0] => 2 [1] => 4 [2] => 6 [3] => 8 )
+
+----------------------------------------------------------------------------------
+
+## Using Nameless function with Variable Function
+
+<?php
+$two = function($n) {
+echo $n * 2;
+};
+$two(2); // 4
+
+----------------------------------------------------------------------------------
+
+## use Statement
+
+*** no need to use global statement ***
+
+<?php
+$name = "Alice";
+$hello = function() use ($name) {
+echo "Hello $name";
+};
+$hello(); // Hello Alice
+
+*** use variable without changing original variable ***
+
+<?php
+$name = "Alice";
+$hello = function() use ($name) {
+$name = "Bob";
+echo "Hello $name";
+};
+$hello(); // Hello Bob
+echo $name; // Alice
+
+----------------------------------------------------------------------------------
+
+## Arrow Function
+
+*** cann't use {} so it can be use only in Function Expression not use in Function Statement***
+
+$two = fn ($n) => $n * 2;
+echo $two(3); // 6
+
+// Arrow function don't need to use ( global and use ) keyword
+
+<?php
+$x = 3;
+$add = fn($y) => $x + $y;
+echo $add(5); // 8
+
+----------------------------------------------------------------------------------
+
+## Named Arguments
+
+<?php
+function profile($name, $email, $age) {
+echo "$name ($age) @ $email";
+}
+profile("Alice", "alice@gmail.com", 22);    // Alice (22) @ alice@gmail.com
+
+// Php 8
+
+*** Argument can be write without order ***
+
+function profile($name, $email, $age) {
+echo "$name ($age) @ $email";
+}
+profile(age: 23, name: "Bob", email: "bob@gmail.com");      // Bob (23) @ bob@gmail.com
+
+
+// Can write like this too
+
+profile(
+age: 23,
+name: "Bob",
+email: "bob@gmail.com",
+);
+
+
+----------------------------------------------------------------------------------
+-----------------------------
+----------------------------------------------------------------------------------
+
+
+# PHP OOP – Object-Oriented Programming
+
+
+## Class
+
+<?php
+class Animal
+{
+//
+}
+$dog = new Animal;
+var_dump($dog); // object(Animal)#1 (0) { }
+
+----------------------------------------------------------------------------------
+
+## Properties and Method with Access Control ( Visibility )
+
+*** -> Dart Operator ***
+
+class Animal
+{
+public $name;
+public function run()
+{
+echo "$this->name is running...";
+}
+}
+
+$dog = new Animal;
+$dog->name = "Bobby";
+$dog->run(); // Bobby is running…
+
+----------------------------------------------------------------------------------
+
+## Private Access Control
+
+<?php
+class Animal
+{
+private $name;
+}
+$dog = new Animal;
+$dog->name = "Bobby";
+// Error: Cannot access private property
+
+----------------------------------------------------------------------------------
+
+## Constructor
+
+*** Php 5, 7 and 8 ***
+*** Constructor can't work with private ***
+
+<?php
+class Animal
+{
+public function __construct()
+{
+echo "Creating Animal object";
+}
+}
+$dog = new Animal;      // Creating Animal object
+
+----------------------------------------------------------------------------------
+
+## Static Properties and Method
+
+*** :: Scope Resolution Operator ( Double Colon Operator ) ***
+
+*** Use static insead of $this to use Static member in Class ***
+
+<?php
+class Animal
+{
+static $type = "Mammal";
+static function info()
+{
+echo "Group: " . static::$type;
+}
+}
+echo Animal::$type; // Mammal
+Animal::info(); // Group: Mammal
+
+----------------------------------------------------------------------------------
+
+## Static Member with Private Constructor
+
+*** must give Argument to create Object ***
+
+
+class Animal
+{
+private $name;
+public function __construct($name)
+{
+$this->name = $name;
+}
+public function run()
+{
+echo "$this->name is running...";
+}
+}
+
+$dog = new Animal("Bobby");
+$dog->run(); // Bobby is running…
+
+
+// PHP 8 ( Constructor PropertyPromotion )
+
+<?php
+class Animal
+{
+public function __construct(private $name)
+{
+//
+}
+public function run()
+{
+echo "$this->name is running...";
+}
+}
+$dog = new Animal("Rambo");
+$dog->run(); // Rambo is running…
+
+----------------------------------------------------------------------------------
+
+## Inheritance
+
+*** Inheritance does not allowed Multiple Inheritance. ***
+
+<?php
+
+class Animal
+{
+
+    public function __construct(private $name)
+    {
+        //
+    }
+
+    public function run()
+    {
+        echo "$this->name is running.....";
+    }
+}
+
+class Dog extends Animal
+{
+    public function bark()
+    {
+        echo "Woof... woff...";
+    }
+}
+
+$bobby = new Dog("Bobby");
+$bobby->bark();
+echo "<br>";
+$bobby->run();
+
+----------------------------------------------------------------------------------
+
+## Multiple Inheritance ( Traits )
+
+
+<?php
+trait Math
+{
+public function add($a, $b)
+{
+echo $a + $b;
+}
+}
+trait Area
+{
+private $PI = 3.14;
+public function circle($r)
+{
+echo $this->PI * $r * $r;
+}
+}
+class Calculator
+{
+use Math, Area;
+}
+$calc = new Calculator;
+$calc->add(1, 2); // 3
+$calc->circle(5); // 78.5
+
+----------------------------------------------------------------------------------
+
+## Inheritance with protected
+
+*** can use parent property in child  ***
+
+<?php
+class Animal
+{
+private $name;
+public function __construct($name)
+{
+$this->name = $name;
+}
+}
+class Dog extends Animal
+{
+public function bark()
+{
+echo "$this->name : Woof.. woof...";
+}
+}
+$bobby = new Dog("Bobby");
+$bobby->bark(); // Undefined property: Dog::$name
+
+----------------------------------------------------------------------------------
+
+## Step by step Inheritance
+
+<?php
+class Animal
+{
+static function info()
+{
+echo "Animal Class";
+}
+}
+class Dog extends Animal
+{
+//
+}
+class Fox extends Dog
+{
+//
+}
+Fox::info(); // Animal Class
+
+----------------------------------------------------------------------------------
+
+## Overriding Parent Class
+
+<?php
+class Animal
+{
+protected $name;
+public function __construct($name)
+{
+$this->name = $name;
+}
+}
+class Dog extends Animal
+{
+private $color;
+public function __construct($name, $color)
+{
+parent::__construct($name);
+$this->color = $color;
+}
+public function profile()
+{
+echo "$this->name has $this->color color.";
+}
+}
+$bobby = new Dog("Bobby", "brown");
+$bobby->profile(); // Bobby has brown color.
+
+----------------------------------------------------------------------------------
+
+## final method
+
+*** prevent override ***
+
+<?php
+class Animal
+{
+final public function run()
+{
+echo "Animal is running...";
+}
+}
+class Dog extends Animal
+{
+public function run()
+{
+echo "The dog is running...";
+}
+}
+// Error: Cannot override final method
+
+----------------------------------------------------------------------------------
+
+## final class
+
+<?php
+final class Animal
+{
+public function run()
+{
+echo "Animal is running...";
+}
+}
+class Dog extends Animal
+{
+//
+}
+// Error: may not inherit from final class
+
+----------------------------------------------------------------------------------
+
+## Abstract class
+
+*** must override parent abstract method ***
+*** cannot create an instance of an abstract class ***
+
+<?php
+abstract class Animal
+{
+public abstract function talk();
+public function run()
+{
+echo "Running...";
+}
+}
+class Dog extends Animal
+{
+//
+}// Error: abstract method must be declared or implement the remaining
+
+----------------------------------------------------------------------------------
+
+## Interface
+
+
+*** simple method or abstract method can be write in Abstract class ***
+
+*** In Abstract class, abstract method need to use abstract keyword because of mixing simple method or abstract method ***
+
+
+*** Only abstract method can be write in Interface class ***
+
+*** In Interface class, abstract method no need to use abstract keyword because of only abstract method can be write in Interface class***
+
+
+*** Can use interface for creating exactly different but similar type object ***
+
+// Error
+
+<?php
+class Dog
+{
+public function run()
+{
+echo "The dog is running";
+}
+}
+class Fish
+{
+public function swim()
+{
+echo "The fish is swimming";
+}
+}
+function app(Dog $obj) {
+$obj->run();
+}
+app(new Dog); // The dog is running
+app(new Fish); // Error: Argument must be Dog
+
+
+// Using interface
+
+<?php
+interface Animal
+{
+public function move();
+}
+class Dog implements Animal
+{
+public function move()
+{
+echo "The dog is running";
+}
+}
+class Fish implements Animal
+{
+public function move()
+{
+echo "The fish is swimming";
+}
+}
+function app(Animal $obj) {
+$obj->move();
+}
+app(new Dog); // The dog is running
+app(new Fish); // The fish is swimming
+
+----------------------------------------------------------------------------------
+
+## Multiple Interface
+
+<?php
+interface Animal
+{
+public function move();
+}
+interface Livestock
+{
+public function isFriendly();
+}
+
+class Cow implements Animal, Livestock
+{
+public function move()
+{
+echo "The cow is walking";
+}
+public function isFriendly()
+{
+return true;
+}
+}
+
+----------------------------------------------------------------------------------
+
+## Class Constant
+
+*** Class Constant are static member ***
+
+*** Class Constant cannot use in traits ***
+
+<?php
+class Area
+{
+const PI = 3.14;
+public function circle($r)
+{
+echo $this->PI * $r * $r;
+}
+}
+
+echo Area::PI; // 3.14
+
+----------------------------------------------------------------------------------
+
+## Magic Methods
+
+*** There are 17 magic methods in php ***
+
+----------------------------------------------------------------------------------
+
+### __call() and callStatic()
+
+*** Can use for calling not exist class or static class ***
+
+<?php
+class Math
+{
+public function __call($name, $args)
+{
+echo "Method $name doesn't exists";
+}
+static function __callStatic($name, $args)
+{
+echo "Static method $name doesn't exists";
+}
+}
+$obj = new Math;
+$obj->add(); // Method add doesn't exists
+Math::add(); // Static method add doesn't exists
+
+----------------------------------------------------------------------------------
+
+### __invoke()
+
+*** Can use for run Object like Function ***
+
+<?php
+class Math
+{
+public function __invoke()
+{
+echo "This is not a function";
+}
+}
+$obj = new Math;
+$obj(); // This is not a function
+
+----------------------------------------------------------------------------------
+
+### __set() and __get()
+
+*** Can user for private and protected values ***
+
+<?php
+class Math
+{
+private $PI = 3.14;
+public function __get($name)
+{
+echo "Cannot get $name";
+}
+public function __set($name, $value)
+{
+echo "Cannot set $name with $value";
+}
+}
+$obj = new Math;
+echo $obj->PI; // Cannot access PI
+$obj->PI = 3.142; // Cannot set PI with 3.142
+
+----------------------------------------------------------------------------------
+
+### __toString()
+
+<?php
+class Math
+{
+private $PI = 3.14;
+public function __toString()
+{
+return "PI = $this->PI";
+}
+}
+
+$obj = new Math;
+echo $obj; // PI = 3.14
+
+----------------------------------------------------------------------------------
