@@ -405,6 +405,8 @@ echo $x < $y xor $x === 3; // (false)
 
 ### Ternary & Null Coalescing Operator
 
+#### Ternary 
+
 <?php
 $name = "";
 echo $name ? $name : "Unknown"; // Unknown
@@ -434,14 +436,14 @@ echo isset($name) ? $name : "Unknown"; // Unknown
 
 ----------------------------------------------------------------------------------
 
-###  Null Coalescing Operator 
+####  Null Coalescing Operator 
 
 <?php
 echo $name ?? "Unknown"; // Unknown
 
 ----------------------------------------------------------------------------------
 
-###  Null Coalescing Assignment Operator
+####  Null Coalescing Assignment Operator
 
 *** if $result variable exist $name will be assign in $result ***
 
@@ -1250,7 +1252,7 @@ class Dog extends Animal
 ## Abstract class
 
 *** must override parent abstract method ***
-*** cannot create an instance of an abstract class ***
+*** cannot create an instance (eg. new Animal()) of an abstract class ***
 
 <?php
 abstract class Animal
@@ -1466,3 +1468,353 @@ $obj = new Math;
 echo $obj; // PI = 3.14
 
 ----------------------------------------------------------------------------------
+-----------------------------
+----------------------------------------------------------------------------------
+
+# Essential Design Patterns
+
+1. Objects
+2. Encapsulation (Information Hiding) // eg. praivate or protected
+3. Inheritance  (Composition)   // eg. Inheritance or Abstract Class
+4. Polymorphism (Subtyping) //  Interface
+
+----------------------------------------------------------------------------------
+
+## Object-Oriented Design Principles 
+
+###SOLID
+
+S   ->  Single Responsibility Principle
+O   ->  Open/Close Principle
+L   ->  Liskov Substitution Principle   ( Interface )
+I   ->  Interface Segregation Principle
+D   ->  Dependency Inversion Principle
+
+----------------------------------------------------------------------------------
+
+## Object-Oriented Design Patterns
+
+
+### GoF Design Patterns ( 23 )
+
+#### Singleton
+
+*** User for Create only one object for one Class ***
+
+
+<?php
+class Setting
+{
+static $setting = null;
+public $dark = 0;
+protected function __construct()
+{
+//
+}
+static function create()
+{
+if(!static::$setting) {
+static::$setting = new static;
+}
+return static::$setting;
+}
+}
+$setting1 = Setting::create();
+$setting1->dark = 1;
+$setting2 = Setting::create();
+echo $setting2->dark; // 1
+
+----------------------------------------------------------------------------------
+
+#### Builder Pattern
+
+*** used to create complex objects with multiple optional components or 
+configuration parameters in a more readable and maintainable way.  ***
+
+<?php
+
+class ProfileBuilder
+{
+    private $name;
+    private $phone;
+
+    public function __get($name)
+    {
+        return $this->$name;
+    }
+
+    public function __set($name, $value)
+    {
+        $this->$name = $value;
+    }
+
+    public function build(){
+        return new Profile($this);
+    }
+}
+
+class Profile
+{
+    private $name;
+    private $phone;
+
+    public function __construct(ProfileBuilder $pb)
+    {
+        $this->name = $pb->name;
+        $this->phone = $pb->phone;
+    }
+
+    public function __get($name)
+    {
+        return $this->$name;
+    }
+
+    static function builder()
+    {
+        return new ProfileBuilder();
+    }
+}
+
+$user = Profile::builder();
+$user->name = "Alice";
+$user->phone = "099999999";
+$user = $user->build();
+
+var_dump($user);
+echo "<br>";
+echo $user->name;
+echo "<br>";
+echo $user->phone;
+
+----------------------------------------------------------------------------------
+
+#### Factory Pattern
+
+*** Can be create Data to Object without manual ***
+
+<?php
+
+class Profile
+{
+
+    private $name;
+    private $phone;
+
+    public function __construct($name, $phone)
+    {
+        $this->name = $name;
+        $this->phone = $phone;
+    }
+}
+
+$data = [
+    ["name" => "Alice", "phone" => "654123"],
+    ["name" => "Bob"],
+    ["name" => "Tom", "phone" => "654123"],
+];
+
+
+class ProfileFactory
+{
+    private $data;
+
+    public function __construct($data)
+    {
+        $this->data = $data;
+    }
+    public function create()
+    {
+        $result = [];
+        foreach ($this->data as $data) {
+            $name = $data['name'] ?? "Unknown";
+            $phone = $data['phone'] ?? "N/A";
+            $result[] = new Profile($name, $phone);
+        }
+        return $result;
+    }
+}
+
+$pf = new ProfileFactory($data);
+$profiles = $pf->create();
+
+print_r($profiles);
+
+----------------------------------------------------------------------------------
+
+#### Strategy Pattern
+
+*** This pattern enables clients to choose the algorithm to use at runtime. ***
+
+<?php
+interface PaymentInterface
+{
+    public function amount();
+}
+class CashPayment implements PaymentInterface
+{
+    public function amount()
+    {
+        return 100;
+    }
+}
+class MobilePayment implements PaymentInterface
+{
+    public function amount()
+    {
+        return 90;
+    }
+}
+
+class Payment
+{
+    private $paymentMethod;
+
+    public function pay($context)
+    {
+        switch ($context) {
+            case "cash":
+                $this->paymentMethod = new CashPayment;
+                break;
+            case "mobile":
+                $this->paymentMethod = new MobilePayment;
+                break;
+            default:
+                $this->paymentMethod = new CashPayment;
+        }
+        return $this->paymentMethod->amount();
+    }
+}
+
+$payment = new Payment;
+echo $payment->pay("cash") . "USD"; // 100USD
+echo $payment->pay("mobile") . "USD"; // 90USD
+
+----------------------------------------------------------------------------------
+
+#### Facade Pattern
+
+*** It hides the complexities of the subsystem 
+and provides a single interface that the client code can use to interact with the subsystem.  ***
+
+<?php
+
+class CheckOilPressure
+{
+    public function check()
+    {
+        echo "Oil Pressure OK.";
+    }
+}
+
+class CheckBreakFluid
+{
+    public function check()
+    {
+        echo "Break Fluid OK.";
+    }
+}
+
+class Car
+{
+
+    public $oil;
+    public $break;
+
+    public function __construct()
+    {
+        $this->oil = new CheckOilPressure;
+        $this->break = new CheckBreakFluid;
+    }
+
+    public function start()
+    {
+        $this->oil->check();
+        $this->break->check();
+        echo "Car Engine Started.";
+    }
+
+}
+
+$car = new Car;
+$car->start();
+
+
+//Larvel
+
+<?php
+class Facade
+{
+    static function __callStatic($name, $args)
+    {
+        $name = strtoupper($name);
+        $arg = $args[0] ?? "/";
+        echo "Sending $name to $arg";
+    }
+}
+class Route extends Facade
+{
+    //
+}
+Route::get("/comments");
+// Sending GET to /comments
+Route::post();
+// Sending POST to /
+
+----------------------------------------------------------------------------------
+
+#### Provider Pattern
+
+*** sane with Strategy Pattern ***
+
+<?php
+interface Log
+{
+    public function write();
+}
+class Text implements Log
+{
+    public function write()
+    {
+        echo "Saving to text file";
+    }
+}
+class Memory implements Log
+{
+    public function write()
+    {
+        echo "Saving on memory";
+    }
+}
+
+class Services
+{
+    public $container = [];
+    public function register($name, $class)
+    {
+        $this->container[$name] = $class;
+    }
+}
+$services = new Services;
+$services->register("text", Text::class);
+$services->register("memory", Memory::class);
+
+class Provider
+{
+    public $services;
+    public function __construct($services)
+    {
+        $this->services = $services->container;
+    }
+    public function make($service)
+    {
+        if (isset($this->services[$service]))
+            return new $this->services[$service];
+        // else Error: Service doesn't exist
+    }
+}
+
+$provider = new Provider($services);
+$log = $provider->make("text");
+$log->write(); // Saving to text file
+$log = $provider->make("memory");
+$log->write(); // Saving on memory
