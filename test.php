@@ -1,52 +1,38 @@
 <?php
-interface Log
+class Model
 {
-    public function write();
-}
-class Text implements Log
-{
-    public function write()
+    public function save()
     {
-        echo "Saving to text file";
-    }
-}
-class Memory implements Log
-{
-    public function write()
-    {
-        echo "Saving on memory";
+        echo "Saving $this->name and $this->age";
     }
 }
 
-class Services
+class Repository
 {
-    public $container = [];
-    public function register($name, $class)
+    public function update($data)
     {
-        $this->container[$name] = $class;
-    }
-}
-$services = new Services;
-$services->register("text", Text::class);
-$services->register("memory", Memory::class);
-
-class Provider
-{
-    public $services;
-    public function __construct($services)
-    {
-        $this->services = $services->container;
-    }
-    public function make($service)
-    {
-        if (isset($this->services[$service]))
-            return new $this->services[$service];
-        // else Error: Service doesn't exist
+        $name = $data['name'] ?? "Unknown";
+        $age = $data['age'] ?? "Unknown";
+        $model = new Model;
+        $model->name = $name;
+        $model->age = $age;
+        $model->save();
     }
 }
 
-$provider = new Provider($services);
-$log = $provider->make("text");
-$log->write(); // Saving to text file
-$log = $provider->make("memory");
-$log->write(); // Saving on memory
+class App
+{
+    private $repo;
+    public function __construct(Repository $repo)
+    {
+        $this->repo = $repo;
+    }
+    public function update($data)
+    {
+        $this->repo->update($data);
+    }
+}
+
+$app = new App(new Repository);
+$app->update(["name" => "Alice", "age" => 22]);
+// Saving Alice and 22
