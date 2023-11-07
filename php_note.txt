@@ -1818,3 +1818,299 @@ $log = $provider->make("text");
 $log->write(); // Saving to text file
 $log = $provider->make("memory");
 $log->write(); // Saving on memory
+
+----------------------------------------------------------------------------------
+-----------------------------
+----------------------------------------------------------------------------------
+
+# PHP Error Handling
+
+1. E_PARSE
+2. E_ERROR
+3. E_WARNING
+4. E_NOTICE
+5. E_STRICT
+6. E_DEPRECATED
+7. E_ALL
+
+----------------------------------------------------------------------------------
+
+## Error Handling
+
+<?php
+
+function add($nums)
+{
+    if (!is_array($nums)) {
+        throw new Exception("Argument must be array");
+    }
+    return array_sum($nums);
+}
+
+try {
+    echo add(1);
+} catch (Exception $e) {
+    echo $e->getMessage();
+} finally {
+    echo "Done";
+}
+
+// Argument must be array
+// Done
+
+----------------------------------------------------------------------------------
+-----------------------------
+----------------------------------------------------------------------------------
+
+# PHP Modules & Namespaces
+
+
+## Modules
+
+*** can include_one for multiple files include ***
+
+//test.php
+<?php
+
+include("Math.php");
+// include 'Math.php';
+echo PI;
+echo "<br>";
+echo add(1,2);
+
+//Math.php
+<?php
+// Math.php
+define('PI', 3.14);
+function add($a, $b)
+{
+    echo $a + $b;
+}
+
+----------------------------------------------------------------------------------
+
+## Namespaces
+
+//test.php
+<?php
+namespace Math;
+
+include("Math.php");
+include("Caculator.php");
+
+
+echo add(1, 2);
+echo "<br>";
+echo \Caculator\add([2, 3, 4]);
+
+//Math.php
+<?php
+
+namespace Math;
+
+// Math.php
+define('PI', 3.14);
+function add($a, $b)
+{
+    echo $a + $b;
+}
+
+
+//Caculator.php
+<?php
+
+namespace Caculator;
+
+function double($n)
+{
+    return $n * 2;
+}
+function add($nums)
+{
+    return array_sum($nums);
+}
+
+----------------------------------------------------------------------------------
+
+## Sub-Namespace
+
+//test.php
+<?php
+namespace Math;
+
+include("Math.php");
+
+
+echo Basic\add(1, 2);
+
+//Math.php
+<?php
+
+namespace Math\Basic;
+
+// Math.php
+define('PI', 3.14);
+function add($a, $b)
+{
+    echo $a + $b;
+}
+
+----------------------------------------------------------------------------------
+
+## Namespace Import ( use )
+
+//test.php
+<?php
+
+include("Math.php");
+
+use Library\Helper\Math\Basic\Caculator as Math;
+
+$maths = new Math;
+
+echo $maths->add([1, 2]);
+
+//Math.php
+<?php
+
+namespace Library\Helper\Math\Basic;
+
+class Caculator
+{
+    public function add($nums)
+    {
+        return array_sum($nums);
+    }
+}
+
+----------------------------------------------------------------------------------
+
+## PSR-4
+
+*** class name should be Capital Case Namespace ***
+*** class name and code file name should be same ***
+*** namespace path and folder path should be same ***
+
+----------------------------------------------------------------------------------
+
+## Class Autoload
+
+*** https://www.php-fig.org/psr/psr-4/ ***
+
+
+//autoLoad.php
+<?php
+spl_autoload_register(function ($class) {
+    $class = str_replace("\\", "/", $class);
+    include($class . ".php");
+});
+
+//Library\Helper\Math.php
+<?php
+namespace Library\Helper;
+class Math
+{
+    public function add($nums)
+    {
+        return $nums + 2;
+    }
+}
+
+//Library\Helper\Calculator.php
+<?php
+namespace Library\Helper;
+class Calculator
+{
+    function double($n)
+    {
+        return $n * 2;
+    }
+    function add($nums)
+    {
+        return array_sum($nums);
+    }
+}
+
+//test.php
+<?php
+include("autoLoad.php");
+use Library\Helper\Calculator;
+use Library\Helper\Math;
+
+$calc = new Calculator;
+$math = new Math;
+
+echo $calc->add([1, 2]);
+echo "<br>";
+echo $math->add(3);
+
+----------------------------------------------------------------------------------
+-----------------------------
+----------------------------------------------------------------------------------
+
+# Composer
+
+----------------------------------------------------------------------------------
+-----------------------------
+----------------------------------------------------------------------------------
+
+# Requests, Cookies & Sessions
+
+
+## Superglobal Variable
+
+*** Superglobal Variable can use everywhere without using global keyword ***
+
+$_GET,$_POST   //for get URL Query values with Aarray format
+
+$_REQUEST   // can ascept get or post
+
+//index.php
+<h1>PHP Request</h1>
+
+    <form action="request.php" method="post">
+        <input type="text" name="name" placeholder="Name"><br>
+        <input type="text" name="age" placeholder="Age"><br>
+
+        <button type="submit">Send Data</button>
+    </form>
+
+//request.php
+<?php
+
+print_r($_POST);
+
+----------------------------------------------------------------------------------
+
+## Cookies
+
+//save-cookie.php
+<?php
+
+setcookie("name", "Bob", time() + 3600);
+setcookie("theme", "light");
+
+setcookie("name", "", time() - 1);
+
+echo "See view-cookie.php";
+
+//view-cookie.php
+<?php
+
+print_r($_COOKIE);
+
+*** Cookie can be save with time and folder ***
+
+setcookie("path", "cookie", time() + 3600, "/Learning-Php/test/"); 
+
+setcookie("name","",time()-1);  //delete cookie
+
+----------------------------------------------------------------------------------
+
+## Session
+
+*** Cookie data are store together with Web browser ***
+
+*** Session data are store together with Web server ***
+
+

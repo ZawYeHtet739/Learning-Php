@@ -1,52 +1,13 @@
 <?php
-interface Log
-{
-    public function write();
-}
-class Text implements Log
-{
-    public function write()
-    {
-        echo "Saving to text file";
-    }
-}
-class Memory implements Log
-{
-    public function write()
-    {
-        echo "Saving on memory";
-    }
-}
 
-class Services
-{
-    public $container = [];
-    public function register($name, $class)
-    {
-        $this->container[$name] = $class;
-    }
-}
-$services = new Services;
-$services->register("text", Text::class);
-$services->register("memory", Memory::class);
+include("autoLoad.php");
 
-class Provider
-{
-    public $services;
-    public function __construct($services)
-    {
-        $this->services = $services->container;
-    }
-    public function make($service)
-    {
-        if (isset($this->services[$service]))
-            return new $this->services[$service];
-        // else Error: Service doesn't exist
-    }
-}
+use Library\Helper\Calculator;
+use Library\Helper\Math;
 
-$provider = new Provider($services);
-$log = $provider->make("text");
-$log->write(); // Saving to text file
-$log = $provider->make("memory");
-$log->write(); // Saving on memory
+$calc = new Calculator;
+$math = new Math;
+
+echo $calc->add([1, 2]);
+echo "<br>";
+echo $math->add(3);
