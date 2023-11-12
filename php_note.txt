@@ -2134,6 +2134,53 @@ echo $math->add(3);
 
 # Composer
 
+*** composer require commend can store downloaded packdge in vendor folder ***
+
+*** Can create by copying packages with composer create-project commend ***
+
+// composer.json
+{
+    "name": "zai/app",
+    "description": "For testing.",
+    "authors": [
+        {
+            "name": "Zaw Ye Htet"
+        }
+    ],
+    "require": {
+        "nesbot/carbon": "^2.71"
+    },
+    "autoload": {
+        "psr-4": {
+            "Library\\": "Library/"
+        }
+    }
+}
+
+// Library\name_spaces\Math.php
+<?php
+
+namespace Library\name_spaces;
+
+class Math
+{
+    static function add($a, $b)
+    {
+        return $a + $b;
+    }
+}
+
+//test.php
+<?php
+include("vendor/autoload.php");
+
+use Carbon\Carbon;
+use Library\name_spaces\Math;
+
+echo Carbon::now()->toDateTimeString();
+echo "<br>";
+echo Math::add(3, 4);
+
 ----------------------------------------------------------------------------------
 -----------------------------
 ----------------------------------------------------------------------------------
@@ -2168,6 +2215,8 @@ print_r($_POST);
 
 ## Cookies
 
+*** Cookies is use only for store Text ***
+
 //save-cookie.php
 <?php
 
@@ -2196,6 +2245,30 @@ setcookie("name","",time()-1);  //delete cookie
 *** Cookie data are store together with Web browser ***
 
 *** Session data are store together with Web server ***
+
+*** Store ID in browser for get data form server ***
+eg.Name - PHPSESSID
+
+*** Session can be store Array and Object ***
+
+
+//test.php
+<?php
+session_start();
+print_r($_SESSION['user']);
+
+
+// get_data.php
+<?php
+session_start();
+print_r($_SESSION['user']);
+
+//Delete Session Data
+<?php
+session_start();
+unset( $_SESSION['user'] );
+
+----------------------------------------------------------------------------------
 
 
 

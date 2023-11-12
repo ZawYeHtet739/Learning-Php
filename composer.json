@@ -1,0 +1,17 @@
+{
+    "name": "zai/app",
+    "description": "For testing.",
+    "authors": [
+        {
+            "name": "Zaw Ye Htet"
+        }
+    ],
+    "require": {
+        "nesbot/carbon": "^2.71"
+    },
+    "autoload": {
+        "psr-4": {
+            "Library\\": "Library/"
+        }
+    }
+}
