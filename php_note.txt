@@ -2213,6 +2213,29 @@ print_r($_POST);
 
 ----------------------------------------------------------------------------------
 
+### $GLOBALS
+
+//test.php
+<?php
+$name = "Alice";
+function hello(){
+    echo "Hello " . $GLOBALS['name'];
+}
+
+hello();
+
+----------------------------------------------------------------------------------
+
+### $_SERVER
+
+*** can watch Information of Request/Response ***
+
+//test.php
+<?php
+print_r( $_SERVER );
+
+----------------------------------------------------------------------------------
+
 ## Cookies
 
 *** Cookies is use only for store Text ***
@@ -2270,7 +2293,15 @@ unset( $_SESSION['user'] );
 
 ----------------------------------------------------------------------------------
 
+# PHP File Upload
 
+*** file input only work in post method ***
 
+// file_upload.php
+<form action="upload.php" method="post" enctype="multipart/form-data">
+        <input type="file" name="photo">
+        <button type="submit">Send</button>
+</form>
 
+//upload.php
 

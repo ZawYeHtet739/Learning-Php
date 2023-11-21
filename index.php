@@ -18,8 +18,6 @@
         <button type="submit">Send Data</button>
     </form>
 
-
-
 </body>
 
 </html>

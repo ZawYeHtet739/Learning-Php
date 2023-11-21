@@ -21,6 +21,24 @@ if (!isset($_SESSION['user'])) {
 <body>
     <div class="container mt-5">
         <h1 class="mb-3">John Doe (Manager) </h1>
+
+        <?php if (isset($_GET['error'])): ?>
+            <div class="alert alert-warning">
+                Cannot upload file.
+            </div>
+        <?php endif ?>
+
+        <?php if (file_exists('_actions/photo/profile.jpg')): ?>
+            <img class="img-thumbnail mb-3" src="_actions/photos/profile.jpg" alt="Profile Photo" width="200">
+        <?php endif ?>
+
+        <form action="_actions/upload.php" method="post" enctype="multipart/form-data">
+            <div class="input-group mb-3">
+                <input type="file" name="photo" class="form-control">
+                <button class="btn btn-secondary">Upload</button>
+            </div>
+        </form>
+
         <ul class="list-group">
             <li class="list-group-item">
                 <b>Email:</b> jhon.doe@gmail.com
@@ -35,9 +53,6 @@ if (!isset($_SESSION['user'])) {
         <br>
         <a href="_actions/logout.php">Logout</a>
     </div>
-
-    <p><?php print_r($_SESSION); ?></p>
-    <p><?php print_r($_POST); ?></p>
 </body>
 
 </html>
