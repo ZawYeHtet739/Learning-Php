@@ -5,8 +5,9 @@ $tmp = $_FILES['photo']['tmp_name'];
 $type = $_FILES['photo']['type'];
 
 
+
 if ($error) {
-    header('location: ../profile.php?error=file');
+    header("location: ../profile.php?error=file&error_code=$error");
     exit();
 }
 

@@ -28,7 +28,7 @@ if (!isset($_SESSION['user'])) {
             </div>
         <?php endif ?>
 
-        <?php if (file_exists('_actions/photo/profile.jpg')): ?>
+        <?php if (file_exists('_actions/photos/profile.jpg')): ?>
             <img class="img-thumbnail mb-3" src="_actions/photos/profile.jpg" alt="Profile Photo" width="200">
         <?php endif ?>
 
