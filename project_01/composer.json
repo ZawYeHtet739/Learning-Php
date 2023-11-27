@@ -1,0 +1,21 @@
+{
+    "name": "user/project_01",
+    "autoload": {
+        "psr-4": {
+            "User\\Project01\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Zaw Ye Htet",
+            "email": "zawyehtet7928@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Libs\\": "_classes/Libs/",
+            "Helpers\\": "_classes/Helpers/"
+        }
+    }
+}

@@ -1,17 +1,15 @@
 {
-    "name": "zai/app",
-    "description": "For testing.",
-    "authors": [
-        {
-            "name": "Zaw Ye Htet"
-        }
-    ],
-    "require": {
-        "nesbot/carbon": "^2.71"
-    },
+    "name": "user/learning-php",
     "autoload": {
         "psr-4": {
-            "Library\\": "Library/"
+            "User\\LearningPhp\\": "src/"
         }
-    }
+    },
+    "authors": [
+        {
+            "name": "Zaw Ye Htet",
+            "email": "zawyehtet7928@gmail.com"
+        }
+    ],
+    "require": {}
 }

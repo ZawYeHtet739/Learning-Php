@@ -1951,13 +1951,12 @@ try {
 
 ## Modules
 
-*** can include_one for multiple files include ***
+*** can include one for multiple files include ***
 
 //test.php
 <?php
 
-include("Math.php");
-// include 'Math.php';
+include("Math.php");    // include 'Math.php';
 echo PI;
 echo "<br>";
 echo add(1,2);
@@ -2305,3 +2304,150 @@ unset( $_SESSION['user'] );
 
 //upload.php
 
+----------------------------------------------------------------------------------
+
+# PHP with mysql
+
+*** fetch() is use for retrieve data line by line ***
+*** fetchAll() is use for retrieve all data ***
+*** fetchObject() use for retrieve data as object ***
+*** lastInsertId() Method is use for get last auto increment ID ***
+
+----------------------------------------------------------------------------------
+
+## Select
+
+//test.php (Select)
+<?php
+$db = new PDO(
+    'mysql:dbhost=localhost;dbname=project_01',
+    'root',
+    '',
+    [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
+    ]
+
+);
+
+$statement = $db->query("SELECT * FROM roles");
+$result = $statement->fetch();
+
+print_r($result);
+
+----------------------------------------------------------------------------------
+
+## INSERT
+
+*** lastInsertId() run on db ***
+
+//test.php
+<?php
+
+$db = new PDO(
+    'mysql:dbhost=localhost;dbname=project_01',
+    'root',
+    '',
+    [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
+    ]
+
+);
+
+$sql = "INSERT INTO roles (name,value) VALUES ('Supervisor',4)";
+$statement = $db->query($sql);
+
+echo $db->lastInsertId();
+
+----------------------------------------------------------------------------------
+
+## INSERT (Prepare Statement)
+
+//test.php
+
+<?php
+$db = new PDO(
+    'mysql:dbhost=localhost;dbname=project_01',
+    'root',
+    '',
+    [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
+    ]
+
+);
+
+$sql = "INSERT INTO roles (name,value) VALUES (:name, :value)";
+$statement = $db->prepare($sql);
+
+$statement->execute(
+    [
+        'name' => 'God',
+        'value' => 999
+    ]
+);
+
+echo $db->lastInsertId();
+
+----------------------------------------------------------------------------------
+
+# Update
+
+*** rowCount() method is use for 
+get before and after diff record of run a query ***
+
+*** rowCount() run on statement ***
+
+//test.php
+
+<?php
+$db = new PDO(
+    'mysql:dbhost=localhost;dbname=project_01',
+    'root',
+    '',
+    [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
+    ]
+
+);
+
+$sql = "UPDATE roles SET name=:name WHERE value = 999";
+$statement = $db->prepare($sql);
+
+$statement->execute(
+    [
+        'name' => 'Superman',
+    ]
+);
+
+echo $statement->rowCount();
+
+----------------------------------------------------------------------------------
+
+## Delete
+
+//test.php
+
+<?php
+$db = new PDO(
+    'mysql:dbhost=localhost;dbname=project_01',
+    'root',
+    '',
+    [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
+    ]
+
+);
+
+$sql = "DELETE FROM roles WHERE id > 3";
+
+$statement = $db->prepare($sql);
+
+$statement->execute();
+
+echo $statement->rowCount();
+
+----------------------------------------------------------------------------------

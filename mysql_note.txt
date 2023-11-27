@@ -79,3 +79,57 @@ Primary အကြေနနဲ့ ထားသင့်ပါတယ်။***
 #AI
 
 *** Auto Increment ***
+
+----------------------------------------------------------------------------------
+
+#Storage Engine
+
+*** InnoDB ***
+
+
+----------------------------------------------------------------------------------
+
+# Testing Query
+
+INSERT INTO `roles` (`id`, `name`, `value`) VALUES (NULL, 'User', '1'),
+ (NULL, 'Manager', '2'), (NULL, 'Admin', '3');
+
+INSERT INTO users (
+ name, 
+ email, 
+ phone, 
+ address, 
+ password, 
+ created_at
+) VALUES (
+ 'Alice',
+ 'alice@gmail.com',
+ '123456', 
+ 'Yangon', 
+ 'password', 
+ NOW() // function for get current time (https://www.w3schools.com/mysql/mysql_ref_functions.asp)
+
+ SELECT * FROM users LIMIT 10
+
+ SELECT * FROM users LIMIT 5, 10
+
+SELECT * FROM users WHERE role_id = 1 ORDER BY name LIMIT 10
+
+SELECT users.name, users.role_id, roles.name AS role
+FROM users LEFT JOIN roles ON users.role_id = roles.id
+
+----------------------------------------------------------------------------------|
+
+-- Create a new database
+CREATE DATABASE newdatabase;
+
+-- Copy tables and data
+CREATE TABLE newdatabase.table1 AS SELECT * FROM mydatabase.table1;
+-- Repeat for other tables
+
+-- Update any references in your application code or other databases
+
+-- Drop the old database
+DROP DATABASE mydatabase;
+
+----------------------------------------------------------------------------------|
