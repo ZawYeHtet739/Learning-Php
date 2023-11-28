@@ -2451,3 +2451,10 @@ $statement->execute();
 echo $statement->rowCount();
 
 ----------------------------------------------------------------------------------
+
+
+// run 
+
+composer require fakerphp/fakerphp
+
+localhost/project/_actions/populate.php

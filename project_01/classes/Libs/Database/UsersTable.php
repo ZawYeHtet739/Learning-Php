@@ -38,14 +38,17 @@ class UsersTable
 
     public function getAll()
     {
-        $statement = $this->db->query(
-            "
+        try {
+            $query = "
                 SELECT users.*, roles.name AS role, roles.value
                 FROM users LEFT JOIN roles
                 ON users.role_id = roles.id 
-            "
-        );
+            ";
+            $statement = $this->db->query($query);
 
-        return $statement->fetchAll();
+            return $statement->fetchAll();
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
     }
 }
