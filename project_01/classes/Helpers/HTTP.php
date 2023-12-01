@@ -1,10 +1,11 @@
 <?php
 
-namespace Helpers;
+// namespace Helpers;
+namespace classes\Helpers;
 
 class HTTP
 {
-    static $base = "http://localhost/project_01";
+    static $base = "http://localhost/Learning-Php/project_01";
 
     static function redirect($path, $query = "")
     {

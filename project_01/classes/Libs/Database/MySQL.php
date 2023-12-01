@@ -1,6 +1,7 @@
 <?php
 
-namespace Libs\Database;
+// namespace Libs\Database;
+namespace classes\Libs\Database;
 
 use PDO;
 use PDOException;
@@ -16,7 +17,7 @@ class MySQL
     public function __construct(
         $dbhost = "localhost",
         $dbuser = "root",
-        $dbname = "project",
+        $dbname = "project_01",
         $dbpass = "",
     ) {
         $this->dbhost = $dbhost;

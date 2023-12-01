@@ -1,6 +1,7 @@
 <?php
 
-namespace Helpers;
+// namespace Helpers;
+namespace classes\Helpers;
 
 class Auth
 {

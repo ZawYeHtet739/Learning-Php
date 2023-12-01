@@ -1952,6 +1952,9 @@ try {
 ## Modules
 
 *** can include one for multiple files include ***
+*** can also use require ***
+*** If cannt find file, using require will be stop the process***
+
 
 //test.php
 <?php
@@ -2017,26 +2020,24 @@ function add($nums)
 
 ## Sub-Namespace
 
+//Math.php
+<?php
+
+namespace Math\Basic;
+
+define('PI', 3.14);
+function add($a, $b)
+{
+    echo $a + $b;
+}
+
 //test.php
 <?php
 namespace Math;
 
 include("Math.php");
 
-
 echo Basic\add(1, 2);
-
-//Math.php
-<?php
-
-namespace Math\Basic;
-
-// Math.php
-define('PI', 3.14);
-function add($a, $b)
-{
-    echo $a + $b;
-}
 
 ----------------------------------------------------------------------------------
 
@@ -2311,7 +2312,9 @@ unset( $_SESSION['user'] );
 *** fetch() is use for retrieve data line by line ***
 *** fetchAll() is use for retrieve all data ***
 *** fetchObject() use for retrieve data as object ***
-*** lastInsertId() Method is use for get last auto increment ID ***
+*** lastInsertId() is use for get last auto increment ID ***
+*** rowCount() is use for get before and after diff record 
+of run a query ***
 
 ----------------------------------------------------------------------------------
 
@@ -2394,9 +2397,6 @@ echo $db->lastInsertId();
 
 # Update
 
-*** rowCount() method is use for 
-get before and after diff record of run a query ***
-
 *** rowCount() run on statement ***
 
 //test.php
@@ -2455,6 +2455,24 @@ echo $statement->rowCount();
 
 // run 
 
+if error (
+    composer dump-autoload  //run this
+)
+
 composer require fakerphp/fakerphp
 
 localhost/project/_actions/populate.php
+
+test register (create.php, register.php)
+
+test login (login.php, index.php, profile.php)
+
+
+//create.php (change)
+//autoload_helper.php (delete)
+//UsersTable.php (change)
+//MYSQL.php (change)
+//Auth.php  (change)
+//HTTP.php  (change)
+//login.php (remove suspended comment, change)
+//profile.php (change)
