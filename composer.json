@@ -11,5 +11,7 @@
             "email": "zawyehtet7928@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "fakerphp/faker": "^1.23"
+    }
 }

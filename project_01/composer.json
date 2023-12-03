@@ -1,19 +1,17 @@
 {
     "name": "user/project_01",
-    "autoload": {
-        "psr-4": {
-            "User\\Project01\\": "src/"
-        }
-    },
     "authors": [
         {
             "name": "Zaw Ye Htet",
             "email": "zawyehtet7928@gmail.com"
         }
     ],
-    "require": {},
+    "require": {
+        "fakerphp/faker": "^1.23"
+    },
     "autoload": {
         "psr-4": {
+            "User\\LearningPhp\\Project01\\": "src/",
             "Libs\\": "_classes/Libs/",
             "Helpers\\": "_classes/Helpers/"
         }

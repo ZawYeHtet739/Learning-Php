@@ -20,7 +20,7 @@ if ($table) {
             'phone' => $faker->phoneNumber,
             'address' => $faker->address,
             'password' => md5('password'),
-            'role_id' => $id < 5 ? rand(1, 3) : 1
+            'role_id' => $i < 5 ? rand(1, 3) : 1
         ];
         $table->insert($data);
     }

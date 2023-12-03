@@ -2,9 +2,9 @@
 
 include("autoload_helper.php");
 
-use classes\Libs\Database\MySQL;
-use classes\Libs\Database\UsersTable;
-use classes\Helpers\Auth;
+use _classes\Libs\Database\MySQL;
+use _classes\Libs\Database\UsersTable;
+use _classes\Helpers\Auth;
 
 $table = new UsersTable(new MySQL());
 $all = $table->getAll();
@@ -30,7 +30,6 @@ $auth = Auth::check();
             <a href="_actions/logout.php" class="text-danger">Logout</a>
         </div>
 
-
         <h1 class="mt-5 mb-5">
             Manage Users
             <span class="badge bg-danger text-white">
@@ -50,7 +49,7 @@ $auth = Auth::check();
                 <th>Actions</th>
             </tr>
 
-            <?php foreach ($all as $user): ?>
+            <?php foreach ($all as $user) : ?>
 
                 <tr>
                     <td>
@@ -67,30 +66,24 @@ $auth = Auth::check();
                     </td>
                     <td>
 
-                        <?php if ($user->value === '1'): ?>
-
+                        <?php if ($user->value === '1') : ?>
                             <span class="badge bg-secondary text-white">
                                 <?= $user->role ?>
                             </span>
-
-                        <?php elseif ($user->value === '2'): ?>
-
+                        <?php elseif ($user->value === '2') : ?>
                             <span class="badge bg-primary text-white">
                                 <?= $user->role ?>
                             </span>
-
-                        <?php else: ?>
-
+                        <?php else : ?>
                             <span class="badge bg-success text-white">
                                 <?= $user->role ?>
                             </span>
-
                         <?php endif ?>
 
                     </td>
                     <td>
 
-                        <?php if ($auth->value > 1): ?>
+                        <?php if ($auth->value > 1) : ?>
 
                             <div class="btn-group dropdown">
                                 <a href="#" class="btn btn-sm btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown">
@@ -98,25 +91,48 @@ $auth = Auth::check();
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-dark">
-                                    <a href="_actions/role.php?id=<?= $user->id ?>$role=1" class="dropdown-item">
+                                    <a href="_actions/role.php?id=<?= $user->id ?>&role=1" class="dropdown-item">
                                         User
                                     </a>
-                                    <a href="_actions/role.php?id=<?= $user->id ?>$role=2" class="dropdown-item">
+                                    <a href="_actions/role.php?id=<?= $user->id ?>&role=2" class="dropdown-item">
                                         Manager
                                     </a>
-                                    <a href="_actions/role.php?id=<?= $user->id ?>$role=3" class="dropdown-item">
+                                    <a href="_actions/role.php?id=<?= $user->id ?>&role=3" class="dropdown-item">
                                         Admin
                                     </a>
                                 </div>
+
+                                <?php if ($user->suspended) : ?>
+                                    <a href="_actions/unsuspend.php?id=<?= $user->id ?>" class="btn btn-sm btn-danger">
+                                        Suspended
+                                    </a>
+                                <?php else : ?>
+                                    <a href="_actions/suspend.php?id=<?= $user->id ?>" class="btn btn-sm btn-outline-success">
+                                        Active
+                                    </a>
+                                <?php endif ?>
+
+                                <?php if ($user->id !== $auth->id) : ?>
+                                    <a href="_actions/delete.php?id=<?= $user->id ?>" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure?')">
+                                        Delete
+                                    </a>
+                                <?php endif ?>
+
                             </div>
+
+                        <?php else : ?>
+                            ###
 
                         <?php endif ?>
 
                     </td>
 
                 </tr>
+
             <?php endforeach ?>
+
         </table>
+
     </div>
 
     <script src="js/bootstrap.bundle.min.js"></script>

@@ -6,7 +6,19 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit7c028f19656bf0ba5e7c0b353bb09310
 {
+    public static $files = array (
+        '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
+    );
+
     public static $prefixLengthsPsr4 = array (
+        'U' => 
+        array (
+            'User\\LearningPhp\\Project01\\' => 27,
+        ),
+        'P' => 
+        array (
+            'Psr\\Container\\' => 14,
+        ),
         'L' => 
         array (
             'Libs\\' => 5,
@@ -15,9 +27,21 @@ class ComposerStaticInit7c028f19656bf0ba5e7c0b353bb09310
         array (
             'Helpers\\' => 8,
         ),
+        'F' => 
+        array (
+            'Faker\\' => 6,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
+        'User\\LearningPhp\\Project01\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src',
+        ),
+        'Psr\\Container\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/container/src',
+        ),
         'Libs\\' => 
         array (
             0 => __DIR__ . '/../..' . '/_classes/Libs',
@@ -25,6 +49,10 @@ class ComposerStaticInit7c028f19656bf0ba5e7c0b353bb09310
         'Helpers\\' => 
         array (
             0 => __DIR__ . '/../..' . '/_classes/Helpers',
+        ),
+        'Faker\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/fakerphp/faker/src/Faker',
         ),
     );
 

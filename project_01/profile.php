@@ -6,7 +6,7 @@
 
 include("autoload_helper.php");
 
-use classes\Helpers\Auth;
+use _classes\Helpers\Auth;
 
 $auth = Auth::check();
 

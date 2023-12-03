@@ -2452,22 +2452,6 @@ echo $statement->rowCount();
 
 ----------------------------------------------------------------------------------
 
-
-// run 
-
-if error (
-    composer dump-autoload  //run this
-)
-
-composer require fakerphp/fakerphp
-
-localhost/project/_actions/populate.php
-
-test register (create.php, register.php)
-
-test login (login.php, index.php, profile.php)
-
-
 //create.php (change)
 //autoload_helper.php (delete)
 //UsersTable.php (change)

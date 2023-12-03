@@ -8,9 +8,9 @@
 
 include("../autoload_helper.php");
 
-use classes\Libs\Database\MySQL;
-use classes\Libs\Database\UsersTable;
-use classes\Helpers\HTTP;
+use _classes\Libs\Database\MySQL;
+use _classes\Libs\Database\UsersTable;
+use _classes\Helpers\HTTP;
 
 $data = [
     "name" => $_POST['name'] ?? 'Unknow',
